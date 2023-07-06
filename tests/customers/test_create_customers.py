@@ -4,6 +4,7 @@ import pytest
 from woocommapitest.src.utilities.generic_utilities import generate_random_email_and_password
 from woocommapitest.src.helpers.customer_helper import CustomerHelper
 from woocommapitest.src.dao.customers_dao import CustomersDAO
+from woocommapitest.src.utilities.requests_utility import RequestsUtility
 
 
 @pytest.mark.smoke
@@ -38,7 +39,11 @@ def test_create_customer_only_email_password():
 def test_create_customer_fail_for_existing_email():
     customer_dao = CustomersDAO()
     email_in_db = customer_dao.get_random_customer_email()
+    payload = {"email": email_in_db, "password": "TestPass123*"}
+    req_utility = RequestsUtility()
+    customer_api_res = req_utility.post(endpoint='customers', payload=payload, expected_status_code=400)
+    assert customer_api_res['code'] == 'registration-error-email-exists'
+    assert customer_api_res['message'] == 'An account is already registered with your email address. <a href="#" class="showlogin">Please log in.</a>'
 
-    customer_obj = CustomerHelper()
-    customer_obj.create_customer(email=email_in_db, expected_status_code=400)
+
 

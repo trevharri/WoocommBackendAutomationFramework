@@ -5,6 +5,7 @@ from woocommapitest.src.helpers.customer_helper import CustomerHelper
 
 @pytest.mark.tcid30
 def test_get_all_customers():
+    # test wont work if there are more than 100 customers
     customer_helper = CustomerHelper()
     all_api_customer_ids = customer_helper.get_all_customer_ids()
 

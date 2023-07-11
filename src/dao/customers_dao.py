@@ -19,6 +19,7 @@ class CustomersDAO:
 
     def get_random_customer_email(self, quantity=1):
         sql = f'SELECT user_email FROM quicksitedb.wp_users ORDER BY RAND() LIMIT {quantity};'
+        # rand will get slow if many customers in db
         rs_sql = self.db_util.execute_select(sql)
         email = rs_sql[0]['user_email']
         return email

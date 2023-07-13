@@ -19,6 +19,7 @@ def test_get_all_products():
     assert product_api_names == product_db_names, "Product names in API response do not match post_titles found in DB."
 
 
+@pytest.mark.tcid26
 def test_get_product_by_id():
     product_dao = ProductsDAO()
     product_helper = ProductsHelper()
